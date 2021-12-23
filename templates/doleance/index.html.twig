@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DolleanceController!{% endblock %}
+
+{% block body %}
+
+{% if message is not null %}
+<div class="alert alert-success" role="alert">
+  {{ message }}
+</div>
+{% endif %}
+<a href="#doleance-form" class="btn btn-success">Envoyer doléance</a>
+
+<div class="doleance-list">
+  <h3>Les doléances reçues :</h3>
+    {% for doleance in doleances %}
+
+        <div class="doleance-post">
+        <h4>{{ doleance.subject }}</h4>
+        <hr />
+        {{ doleance.description }}<br />
+        publié le {{ doleance.createdAt | date('d-m-Y') }} par {{ doleance.email }}
+        </div>
+        {{ knp_pagination_render(doleances, '@KnpPaginator/Pagination/twitter_bootstrap_v3_pagination.html.twig') }}
+    {% endfor %}
+</div>
+<div id="doleance-form">
+  <h3>Ecrivez vos doléances içi :</h3>
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{ form(form) }}
+</div>
+{% endblock %}
